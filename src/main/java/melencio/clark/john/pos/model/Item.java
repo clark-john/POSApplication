@@ -1,0 +1,28 @@
+package melencio.clark.john.pos.model;
+
+/**
+ * @author John Clark Melencio
+ */
+public class Item {
+  private final String name;
+  private final int price;
+  private final int quantity;
+  
+  public String getName() {
+    return name;
+  }
+  
+  public int getPrice() {
+    return price;
+  }
+  
+  public int getQuantity() {
+    return quantity;
+  }
+  
+  public Item(String name, int price, int quantity) {
+    this.name = name;
+    this.price = price;
+    this.quantity = quantity;
+  }
+}
