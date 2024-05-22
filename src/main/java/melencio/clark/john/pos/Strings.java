@@ -8,6 +8,8 @@ import java.util.Arrays;
  * @author John Clark Melencio
  */
 public class Strings {
+  public final static String DATE_FMT = "MMMM d, yyyy";
+
   public static String cashFormat(int price) {
     return MessageFormat.format("P{0}", price);
   }
@@ -19,7 +21,7 @@ public class Strings {
   }
   
   public static String formatDate(long millis) {
-    return MessageFormat.format("{0,date,MMMM d, yyyy}", millis);
+    return MessageFormat.format("{0,date," + DATE_FMT + "}", millis);
   }
   
   public static String getTimeNow() {

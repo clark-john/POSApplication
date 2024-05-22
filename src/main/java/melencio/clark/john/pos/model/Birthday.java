@@ -22,7 +22,7 @@ public class Birthday {
     
     try {
       // validate
-      new SimpleDateFormat("MMMM d, yyyy").parse(input);
+      new SimpleDateFormat(Strings.DATE_FMT).parse(input);
     } catch (Exception e) {
       System.err.println("Invalid date");
       return nextBirthday();

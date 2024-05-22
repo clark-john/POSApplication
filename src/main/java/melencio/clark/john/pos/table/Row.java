@@ -2,7 +2,7 @@ package melencio.clark.john.pos.table;
 
 /**
  * row base interface 
- * @author Clark
+ * @author John Clark Melencio
  */
 public interface Row {
   String create(int rowWidth);
