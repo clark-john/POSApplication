@@ -4,6 +4,7 @@ import melencio.clark.john.pos.Strings;
 import melencio.clark.john.pos.model.Discount;
 
 /**
+ * row for displaying discount percentage and its fee
  * @author John Clark Melencio
  */
 public class DiscountRow implements Row {

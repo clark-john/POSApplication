@@ -17,6 +17,7 @@ import melencio.clark.john.pos.table.Row;
 import melencio.clark.john.pos.table.Table;
 
 /**
+ * main entry for pos application
  * @author John Clark Melencio
  */
 public class POS {

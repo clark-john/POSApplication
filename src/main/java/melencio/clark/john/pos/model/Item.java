@@ -1,6 +1,7 @@
 package melencio.clark.john.pos.model;
 
 /**
+ * item object
  * @author John Clark Melencio
  */
 public class Item {

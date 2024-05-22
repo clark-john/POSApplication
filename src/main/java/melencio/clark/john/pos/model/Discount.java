@@ -1,6 +1,7 @@
 package melencio.clark.john.pos.model;
 
 /**
+ * discount object
  * @author John Clark Melencio
  */
 public class Discount {

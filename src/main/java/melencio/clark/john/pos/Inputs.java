@@ -3,6 +3,7 @@ package melencio.clark.john.pos;
 import java.util.Scanner;
 
 /**
+ * input utility methods
  * @author John Clark Melencio
  */
 public class Inputs {

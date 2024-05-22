@@ -3,6 +3,7 @@ package melencio.clark.john.pos.table;
 import melencio.clark.john.pos.Strings;
 
 /**
+ * row for displaying cash amount
  * @author John Clark Melencio
  */
 public class AmountRow implements Row {

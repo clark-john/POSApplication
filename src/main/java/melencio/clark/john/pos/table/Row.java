@@ -1,6 +1,7 @@
 package melencio.clark.john.pos.table;
 
 /**
+ * row base interface 
  * @author Clark
  */
 public interface Row {

@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 
 /**
+ * string utility methods
  * @author John Clark Melencio
  */
 public class Strings {

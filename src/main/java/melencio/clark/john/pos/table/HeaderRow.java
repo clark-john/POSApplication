@@ -9,7 +9,7 @@ package melencio.clark.john.pos.table;
 import static melencio.clark.john.pos.Strings.genSpaces;
 
 /**
- *
+ * row for displaying table headers
  * @author John Clark Melencio
  */
 public class HeaderRow implements Row {

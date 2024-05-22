@@ -3,6 +3,7 @@ package melencio.clark.john.pos.table;
 import java.util.ArrayList;
 
 /**
+ * class for table creation and display
  * @author John Clark Melencio
  */
 public class Table {

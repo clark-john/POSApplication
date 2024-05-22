@@ -11,7 +11,7 @@ import static melencio.clark.john.pos.Strings.*;
 import melencio.clark.john.pos.model.Item;
 
 /**
- *
+ * row for displaying item information
  * @author John Clark Melencio
  */
 public class ItemRow implements Row {
