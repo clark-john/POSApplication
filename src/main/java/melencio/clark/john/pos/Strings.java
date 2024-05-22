@@ -1,4 +1,3 @@
-// Strings.java
 package melencio.clark.john.pos;
 
 import java.text.MessageFormat;

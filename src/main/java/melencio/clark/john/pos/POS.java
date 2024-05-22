@@ -1,5 +1,3 @@
-// POS.java
-// eto main class
 package melencio.clark.john.pos;
 
 import static melencio.clark.john.pos.Inputs.*;

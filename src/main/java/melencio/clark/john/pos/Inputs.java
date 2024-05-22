@@ -1,4 +1,3 @@
-// Inputs.java
 package melencio.clark.john.pos;
 
 import java.util.Scanner;
