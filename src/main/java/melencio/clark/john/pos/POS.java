@@ -57,7 +57,7 @@ public class POS {
     );
     
     for (int i = 1; i <= 5; i++) {
-      System.out.printf("Item #%d:\n", i);
+      System.out.printf("Item #%d:%n", i);
       Item item = enterItem();
       subtotal += item.getPrice() * item.getQuantity();
       items.add(item);
@@ -89,7 +89,7 @@ public class POS {
     newLine();
     printTable();
     newLine();
-    System.out.printf("Thank You %s for your Purchase\n", customerName);
+    System.out.printf("Thank You %s for your Purchase%n", customerName);
   }
   
   public void newLine() {
@@ -123,7 +123,7 @@ public class POS {
   
   public int nextMoney(String prompt, String invalidMsg) {
     return Integer.parseInt(
-      readLine(prompt, "P[\\d,]*", invalidMsg)
+      readLine(prompt, "P[\\d]+[\\d,]*", invalidMsg)
         .substring(1)
         .replaceAll(",", "")
     );
@@ -137,7 +137,7 @@ public class POS {
       if (i.toLowerCase().equals(item)) 
         return itemInput;
     
-    System.out.printf("Item \"%s\" doesn't exist. \n", itemInput);
+    System.out.printf("Item \"%s\" doesn't exist. %n", itemInput);
     return nextItemName();
   }
   
