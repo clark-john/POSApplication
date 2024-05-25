@@ -9,13 +9,18 @@ public class Discount {
   private final int percentage;
   private boolean isApplied = false;
   
+  public Discount(String name, int percentage) {
+    this.name = name;
+    this.percentage = percentage;
+  }
+  
   public void apply(boolean apply) {
     isApplied = apply;
   }
   
   public int discountTotal(int amount) {
     return isApplied
-      ? (int)(((double)percentage / 100) * amount)
+      ? (int)((double)percentage / 100 * amount)
       : 0;
   }
   
@@ -29,10 +34,5 @@ public class Discount {
   
   public boolean isApplied() {
     return isApplied;
-  }
-  
-  public Discount(String name, int percentage) {
-    this.name = name;
-    this.percentage = percentage;
   }
 }

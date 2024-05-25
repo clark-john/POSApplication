@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.MonthDay;
+import java.time.format.TextStyle;
 import java.util.Arrays;
+import java.util.Locale;
 
 import melencio.clark.john.pos.Inputs;
 import melencio.clark.john.pos.Strings;
@@ -18,64 +20,57 @@ public class Birthday {
   private static final int currentYear = LocalDate.now().getYear();
   
   public static Birthday nextBirthday() {
-    String input = Inputs.readLine("Enter birthday: ", "Invalid birthday");
+    String input = Inputs.readLine("Enter your birthday (e.g. April 19, 2006): ", "Invalid birthday");
     
     try {
-      // validate
       new SimpleDateFormat(Strings.DATE_FMT).parse(input);
     } catch (Exception e) {
       System.err.println("Invalid date");
       return nextBirthday();
     }
     
-    // split date by spaced comma separator
-    // note: f for fragments
     String[] f = input.split(",\\s");
     
-    // parse year string
-    int year = Integer.parseInt(f[1]);
+    int year = Integer.parseInt(removeSpaces(f[1]));
     
-    // split first fragment by space
     String[] md = f[0].split("\\s");
     
-    // parse day of the month
-    int dayOfMonth = Integer.parseInt(md[1]);
-    // get month string
-    String month = md[0];
+    int date = Integer.parseInt(md[1]);
+    String monthStr = md[0];
     
-    // get Month of month string
-    Month m = Arrays.stream(Month.values())
-      .filter(mon -> mon.toString().startsWith(month.toUpperCase()))
+    Month month = Arrays.stream(Month.values())
+      .filter(mon -> mon.toString().startsWith(monthStr.trim().toUpperCase()))
       .findFirst()
       .get();
     
-    // safely invalidate when month is null
-    if (m == null) {
+    if (month == null) {
       System.err.println("Invalid month");
       return nextBirthday();
     }
     
-    // validate year (no newer than current year)
     if (year > currentYear) {
       System.err.println("Invalid year");
       return nextBirthday();
     }
     
-    /*
-    local date creation error cases:
-      - feb 29 on non leap year
-      - day of month more than 31
-    */
     LocalDate ld;
     
     try {
-      ld = LocalDate.of(year, m, dayOfMonth);
+      ld = LocalDate.of(year, month, date);
     } catch (Exception e) {
       System.err.println(e.getMessage());
       return nextBirthday();
     }
     
     return new Birthday(ld);
+  }
+  
+  private static String removeSpaces(String text) {
+    return text.replaceAll(" ", "");
+  }
+  
+  public Birthday(LocalDate date) {
+    ld = date;
   }
   
   public int getAge() {
@@ -87,12 +82,17 @@ public class Birthday {
       - year
       - (MonthDay.now().isBefore(MonthDay.of(month, day)) ? 1 : 0);
   }
-  
+
   public String getDate() {
-    return Strings.formatDate(ld.toEpochDay() * 24 * 60 * 60 * 1000);
-  }
-  
-  private Birthday(LocalDate date) {
-    ld = date;
+    int year = ld.getYear();
+    Month month = ld.getMonth();
+    int day = ld.getDayOfMonth();
+    
+    return String.format(
+      "%s %d, %d",
+      month.getDisplayName(TextStyle.FULL, Locale.getDefault()),
+      day,
+      year
+    );
   }
 }

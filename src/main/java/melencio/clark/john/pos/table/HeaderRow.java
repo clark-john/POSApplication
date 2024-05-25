@@ -1,19 +1,18 @@
 package melencio.clark.john.pos.table;
 
+import static melencio.clark.john.pos.Colors.*;
 import static melencio.clark.john.pos.Strings.genSpaces;
 
 /**
- * row for displaying table headers
+ * row for displaying column names
  * @author John Clark Melencio
  */
 public class HeaderRow implements Row {
   @Override
   public String create(int rowWidth) {
-    return String.format(
-      "Quantity%sItem Name%sItem Price%sAmount",
-      genSpaces(rowWidth - 8),
-      genSpaces(rowWidth - 9),
-      genSpaces(rowWidth - 10)
-    );
+    return blue("Quantity")
+      + genSpaces(rowWidth - 8) + green("Item Name")
+      + genSpaces(rowWidth - 9) + purple("Item Price")
+      + genSpaces(rowWidth - 10) + yellow("Amount");
   }
 }

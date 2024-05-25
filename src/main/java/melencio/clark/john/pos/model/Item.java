@@ -9,6 +9,12 @@ public class Item {
   private final int price;
   private final int quantity;
   
+  public Item(String name, int price, int quantity) {
+    this.name = name;
+    this.price = price;
+    this.quantity = quantity;
+  }
+  
   public String getName() {
     return name;
   }
@@ -19,11 +25,5 @@ public class Item {
   
   public int getQuantity() {
     return quantity;
-  }
-  
-  public Item(String name, int price, int quantity) {
-    this.name = name;
-    this.price = price;
-    this.quantity = quantity;
   }
 }

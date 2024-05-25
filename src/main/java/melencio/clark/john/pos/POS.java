@@ -1,5 +1,6 @@
 package melencio.clark.john.pos;
 
+import static melencio.clark.john.pos.Colors.*;
 import static melencio.clark.john.pos.Inputs.*;
 
 import java.util.ArrayList;
@@ -17,10 +18,13 @@ import melencio.clark.john.pos.table.Row;
 import melencio.clark.john.pos.table.Table;
 
 /**
- * main entry for pos application
+ * main entry for POS application
  * @author John Clark Melencio
  */
 public class POS {
+  private final int rowWidth = 18;
+  private final String STRING_REGEX = "[a-zA-Z\\s]+";
+  
   private final String storeName = "Bilihan System";
   private final String storeAddress = "967 Roosevelt Avenue, Quezon City";
   
@@ -40,17 +44,15 @@ public class POS {
   }
   
   public void runSystem() {
-    String firstName = readLine("Enter first name: ", "Invalid name");
-    String lastName = readLine("Enter last name: ", "Invalid name");
+    String firstName = readLine("Enter first name: ", STRING_REGEX, "Invalid first name");
+    String lastName = readLine("Enter last name: ", STRING_REGEX, "Invalid last name");
     
     String customerName = firstName + " " + lastName;
     
     Birthday bday = Birthday.nextBirthday();
     
-    boolean isSenior = bday.getAge() >= 60;
-    
     mem.apply(true);
-    sen.apply(isSenior);
+    sen.apply(bday.getAge() >= 60);
     
     System.out.println(
       "Here are the list of items: " + String.join(", ", itemsList)
@@ -62,93 +64,99 @@ public class POS {
       subtotal += item.getPrice() * item.getQuantity();
       items.add(item);
     }
+
+    total = subtotal;
     
-    int discountTotal = mem.discountTotal(subtotal);
+    int discountTotal = mem.discountTotal(total);
     
     if (sen.isApplied())
-      discountTotal += sen.discountTotal(subtotal);
+      discountTotal += sen.discountTotal(total);
     
-    total = subtotal - discountTotal;
+    total = total - discountTotal;
     
-    cash = nextMoney("Enter cash: ", "Invalid cash");
-    
-    if (total > cash) {
-      System.out.println("Insufficient balance");
-      return;
-    }
+    System.out.println("Your cash is " + Strings.cashFormat(total));
+
+    cash = readInt("Enter cash: P", "Invalid cash");
     
     newLine();
-    System.out.println(storeName);
-    System.out.println(storeAddress);
+    divider();
     newLine();
-    System.out.println("Date: " + Strings.getDateNow());
-    System.out.println("Time: " + Strings.getTimeNow());
+    centeredTitle(storeName);
+    centeredTitle(storeAddress);
     newLine();
-    System.out.println("Customer: " + customerName);
-    System.out.println("Birthday: " + bday.getDate());
+    System.out.println(blue("Date: ") + Strings.getDateNow());
+    System.out.println(blue("Time: ") + Strings.getTimeNow());
+    newLine();
+    System.out.println(blue("Customer: ") + green(customerName));
+    System.out.println(blue("Birthday: ") + green(bday.getDate()));
     newLine();
     printTable();
     newLine();
-    System.out.printf("Thank You %s for your Purchase%n", customerName);
+    System.out.printf("Thank you %s for your purchase%n", green(customerName));
+    newLine();
+    divider();
+    newLine();
   }
   
   public void newLine() {
     System.out.println();
   }
+
+  public void centeredTitle(String text) {
+    System.out.println(
+      Strings.genSpaces(
+        ((rowWidth * 3 + 6) / 2) - (text.length() / 2)
+      ) + red(text)
+    );
+  }
+
+  public void divider() {
+    char[] c = new char[rowWidth * 4 - (rowWidth / 3)];
+    Arrays.fill(c, '-');
+    System.out.println(c);
+  }
   
   public void printTable() {
-    Table t = new Table(15);
+    Table t = new Table(rowWidth);
     t.addRow(new HeaderRow());
-    for (Item i : items)
-      t.addRow(new ItemRow(i));
+    for (Item item : items)
+      t.addRow(new ItemRow(item));
     t.addNewLine();
-    t.addRow(new AmountRow("Subtotal:", subtotal));
-    t.addRow(Row.ofText("Discount(s):"));
+    t.addRow(new AmountRow("Sub Total:", subtotal));
+    t.addRow(Row.ofText(blue("Discount(s):")));
     t.addRow(new DiscountRow(mem, subtotal));
     if (sen.isApplied())
       t.addRow(new DiscountRow(sen, subtotal));
     t.addNewLine();
     t.addRow(new AmountRow("TOTAL:", total));
-    t.addRow(new AmountRow("Cash", cash));
-    t.addRow(new AmountRow("Change", cash - total));
+    t.addRow(new AmountRow("Cash:", cash));
+    t.addRow(new AmountRow("Change:", cash - total));
     t.display();
   }
   
   public Item enterItem(){
     String name = nextItemName();
-    int price = nextPrice();
+    int price = readInt("How much? P", "Invalid price");
     int quantity = nextQuantity();
     return new Item(name, price, quantity);
   }
-  
-  public int nextMoney(String prompt, String invalidMsg) {
-    return Integer.parseInt(
-      readLine(prompt, "P[\\d]+[\\d,]*", invalidMsg)
-        .substring(1)
-        .replaceAll(",", "")
-    );
-  }
-  
+    
   public String nextItemName() {
-    String itemInput = readLine("Enter item name: ", "Invalid name").trim();
+    String itemInput = readLine("Enter item name: ", STRING_REGEX, "Invalid name").trim();
     String item = itemInput.toLowerCase();
     
     for (String i : itemsList)
       if (i.toLowerCase().equals(item)) 
         return itemInput;
     
-    System.out.printf("Item \"%s\" doesn't exist. %n", itemInput);
+    System.err.printf("Item \"%s\" doesn't exist. %n", itemInput);
     return nextItemName();
   }
-  
-  public int nextPrice() {
-    return nextMoney("How much? ", "Invalid price");
-  }
-  
+    
   public int nextQuantity() {
     int quantity = readInt("How many? ", "Invalid quantity");
-    if (quantity < 0 || quantity > 9) {
-      System.out.println("Must be from 0 to 9");
+    if (quantity >= 10) {
+      System.err.println("Must be from 0 to 9");
       return nextQuantity();
     }
     return quantity;

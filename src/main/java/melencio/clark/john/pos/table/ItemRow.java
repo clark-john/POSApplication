@@ -9,26 +9,25 @@ import melencio.clark.john.pos.model.Item;
  * @author John Clark Melencio
  */
 public class ItemRow implements Row {
-  private final Item i;
+  private final Item item;
 
+  public ItemRow(Item item) {
+    this.item = item;
+  }
+  
   @Override
   public String create(int rowWidth) {
-    int quantity = i.getQuantity();
+    int quantity = item.getQuantity();
 
-    String name = i.getName();
-    String price = cashFormat(i.getPrice());
+    String name = item.getName();
+    String price = cashFormat(item.getPrice());
     
     return String.format(
       "%d%s%s%s%s%s%s",
-      quantity, genSpaces(rowWidth - 1),
+      quantity, genSpaces(rowWidth - (quantity + "").length()),
       name, genSpaces(rowWidth - name.length()),
       price, genSpaces(rowWidth - price.length()),
-      cashFormat(i.getPrice() * i.getQuantity())
+      cashFormat(item.getPrice() * item.getQuantity())
     );
   }
-  
-  public ItemRow(Item item) {
-    i = item;
-  }
 }
-
