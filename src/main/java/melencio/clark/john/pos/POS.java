@@ -84,8 +84,8 @@ public class POS {
     centeredTitle(storeName);
     centeredTitle(storeAddress);
     newLine();
-    System.out.println(blue("Date: ") + Strings.getDateNow());
-    System.out.println(blue("Time: ") + Strings.getTimeNow());
+    System.out.println(blue("Date: ") + green(Strings.getDateNow()));
+    System.out.println(blue("Time: ") + green(Strings.getTimeNow()));
     newLine();
     System.out.println(blue("Customer: ") + green(customerName));
     System.out.println(blue("Birthday: ") + green(bday.getDate()));
